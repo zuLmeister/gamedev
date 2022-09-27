@@ -29,11 +29,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color.fromARGB(255, 35, 34, 34),
       ),
       body: Center(
-        child: (landScape) ? Column (
+        child: ListView(
           children: <Widget>[
             CarouselSlider(
               options: CarouselOptions(
-                height: bodyHeight * 0.55,
+                height: mediaQueryHeight,
                 autoPlay: true,
                 viewportFraction: 1,
                 autoPlayInterval: const Duration(seconds: 4),
@@ -41,10 +41,10 @@ class _HomePageState extends State<HomePage> {
               items: [for (var gambar in imageURL) gambar].map((i) {
                 return Builder(builder: (BuildContext context) {
                   return Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: mediaQueryWidth,
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 35, 34, 34),
-                        border: Border.all(color: Colors.white, width: mediaQueryWidth)),
+                        border: Border.all(color: Colors.white, width: 5.0)),
                     child: Center(
                       child: Image.asset(i, fit: BoxFit.fill),
                     ),
@@ -88,7 +88,9 @@ class _HomePageState extends State<HomePage> {
               height: 10,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/explorepage');
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(0, 40),
                 primary: Colors.amber,
