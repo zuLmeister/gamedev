@@ -10,13 +10,13 @@ class LoginPage extends StatelessWidget {
         automaticallyImplyLeading: false,
         ),
       body: Container(
-        child: const MyStatefulWidget(),
-        decoration: BoxDecoration(
-          image: const DecorationImage(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
             image: AssetImage("assets/images/Background.png"),
             fit: BoxFit.cover,
           ),
         ),
+        child: const MyStatefulWidget(),
       ),
     );
   }
@@ -99,6 +99,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   },
                 )),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
                   'Does not have account?',
@@ -113,7 +114,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   onPressed: () {},
                 )
               ],
-              mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
         ));

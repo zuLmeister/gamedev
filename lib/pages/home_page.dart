@@ -5,50 +5,50 @@ import 'package:carousel_slider/carousel_slider.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  var imageURL = [
+    'assets/images/slider1.jpg',
+    'assets/images/background.jpg',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavBar(),
-      backgroundColor: Color.fromARGB(255, 35, 34, 34),
+      backgroundColor: const Color.fromARGB(255, 35, 34, 34),
       appBar: AppBar(
         title: Image.asset('assets/icons/logo.png', height: 70.0),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 35, 34, 34),
+        backgroundColor: const Color.fromARGB(255, 35, 34, 34),
       ),
       body: Center(
         child: ListView(
           children: <Widget>[
             CarouselSlider(
               options: CarouselOptions(
-                height: 350,
+                height: MediaQuery.of(context).size.width,
                 autoPlay: true,
                 viewportFraction: 1,
                 autoPlayInterval: const Duration(seconds: 4),
               ),
-              items: [1, 2, 3].map((i) {
+              items: [for (var gambar in imageURL) gambar].map((i) {
                 return Builder(builder: (BuildContext context) {
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 5.0)
-                    ),
+                        color: const Color.fromARGB(255, 35, 34, 34),
+                        border: Border.all(color: Colors.white, width: 5.0)),
                     child: Center(
-                      child: Text(
-                        'Foto $i',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
+                      child: Image.asset(i, fit: BoxFit.fill),
                     ),
                   );
                 });
               }).toList(),
             ),
+            const Divider(height: 10,),
             Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
@@ -61,9 +61,7 @@ class _HomePageState extends State<HomePage> {
                     color: Colors.white),
               ),
             ),
-            const Divider(
-              height: 20,
-            ),
+            const Divider(height: 10,),
             Wrap(
               alignment: WrapAlignment.spaceAround,
               children: [
@@ -89,7 +87,6 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text('View All Games'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(0, 40),
                 primary: Colors.amber,
@@ -97,7 +94,9 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(12), // <-- Radius
                 ),
               ),
-            )
+              child: const Text('View All Games'),
+            ),
+            const Padding(padding: EdgeInsets.all(16.0)),
           ],
         ),
       ),
