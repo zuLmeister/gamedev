@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             CarouselSlider(
               options: CarouselOptions(
-                height: mediaQueryHeight,
+                height: mediaQueryHeight * 0.48,
                 autoPlay: true,
                 viewportFraction: 1,
                 autoPlayInterval: const Duration(seconds: 4),
@@ -44,9 +44,9 @@ class _HomePageState extends State<HomePage> {
                     width: mediaQueryWidth,
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 35, 34, 34),
-                        border: Border.all(color: Colors.white, width: 5.0)),
+                        border: Border.all(color: Colors.black54, width: 5.0)),
                     child: Center(
-                      child: Image.asset(i, fit: BoxFit.fill),
+                      child: Image.asset(i, fit: BoxFit.fill, width: mediaQueryWidth, height: mediaQueryHeight,),
                     ),
                   );
                 });
@@ -67,20 +67,23 @@ class _HomePageState extends State<HomePage> {
             Wrap(
               alignment: WrapAlignment.spaceAround,
               children: [
-                Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
-                  width: 115,
-                  height: bodyHeight * 0.25,
+                Image.asset(
+                  'assets/images/galih.jpeg',
+                  width: 130,
+                  height: mediaQueryHeight * 0.23,
+                  fit: BoxFit.fill,
                 ),
-                Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
-                  width: 115,
-                  height: bodyHeight * 0.25,
+                Image.asset(
+                  'assets/images/zulkipar.jpeg',
+                  width: 130,
+                  height: mediaQueryHeight * 0.23,
+                  fit: BoxFit.fill,
                 ),
-                Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
-                  width: 115,
-                  height: bodyHeight * 0.25,
+                Image.asset(
+                  'assets/images/paldy.jpeg',
+                  width: 130,
+                  height: mediaQueryHeight * 0.23,
+                  fit: BoxFit.fill,
                 ),
               ],
             ),
