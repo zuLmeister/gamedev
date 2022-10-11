@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/NavBar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import '../components/Navbar.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -18,10 +17,11 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidth = MediaQuery.of(context).size.width;
-    final bool landScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final bool landScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
     return Scaffold(
-      drawer: const NavBar(),
+      drawer: const Navbar(),
       backgroundColor: Color.fromARGB(255, 35, 34, 34),
       appBar: AppBar(
         title: Image.asset('assets/icons/logo.png', height: 70.0),
@@ -60,7 +60,13 @@ class _ExplorePageState extends State<ExplorePage> {
                 ),
                 Image.asset(
                   'assets/images/paldy.jpeg',
-                  width: 130,
+                  width: 115,
+                  height: mediaQueryHeight * 0.23,
+                  fit: BoxFit.fill,
+                ),
+                Image.asset(
+                  'assets/images/paldy.jpeg',
+                  width: 115,
                   height: mediaQueryHeight * 0.23,
                   fit: BoxFit.fill,
                 ),
@@ -68,6 +74,19 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
             const Divider(
               height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/homepage');
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(0, 40),
+                primary: Colors.amber,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+              ),
+              child: const Text('Back to Home'),
             ),
             const Padding(padding: EdgeInsets.all(16.0)),
           ],

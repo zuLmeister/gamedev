@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NavBar extends StatelessWidget {
-  const NavBar({Key? key}) : super(key: key);
+class Navbar extends StatelessWidget {
+  const Navbar ({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,13 @@ class NavBar extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.house_sharp),
+            title: const Text('Home Page'),
+            onTap: () {
+              Navigator.pushNamed(context, '/homepage');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.account_circle),
             title: const Text('Edit Profil'),
             onTap: () {
@@ -39,7 +46,7 @@ class NavBar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/loginpage');
             },
-          )
+          ),
         ],
       ),
     );

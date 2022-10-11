@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/NavBar.dart';
+import '../components/Navbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,10 +18,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQueryWidth = MediaQuery.of(context).size.width;
-    final bool landScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final bool landScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      drawer: const NavBar(),
+      drawer: const Navbar(),
       backgroundColor: const Color.fromARGB(255, 35, 34, 34),
       appBar: AppBar(
         title: Image.asset('assets/icons/logo.png', height: 115),
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             CarouselSlider(
               options: CarouselOptions(
-                height: mediaQueryHeight * 0.48,
+                height: mediaQueryHeight * 0.6,
                 autoPlay: true,
                 viewportFraction: 1,
                 autoPlayInterval: const Duration(seconds: 4),
@@ -46,7 +48,12 @@ class _HomePageState extends State<HomePage> {
                         color: const Color.fromARGB(255, 35, 34, 34),
                         border: Border.all(color: Colors.black54, width: 5.0)),
                     child: Center(
-                      child: Image.asset(i, fit: BoxFit.fill, width: mediaQueryWidth, height: mediaQueryHeight,),
+                      child: Image.asset(
+                        i,
+                        fit: BoxFit.fill,
+                        width: mediaQueryWidth,
+                        height: mediaQueryHeight,
+                      ),
                     ),
                   );
                 });
@@ -67,22 +74,23 @@ class _HomePageState extends State<HomePage> {
             Wrap(
               alignment: WrapAlignment.spaceAround,
               children: [
-                Image.asset(
-                  'assets/images/galih.jpeg',
-                  width: 130,
-                  height: mediaQueryHeight * 0.23,
-                  fit: BoxFit.fill,
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/detail-page');
+                    },
+                    child: Image.asset('assets/images/zulkipar.jpeg',
+                        fit: BoxFit.fill)
                 ),
                 Image.asset(
                   'assets/images/zulkipar.jpeg',
-                  width: 130,
-                  height: mediaQueryHeight * 0.23,
+                  width: 115,
+                  height: 150,
                   fit: BoxFit.fill,
                 ),
                 Image.asset(
                   'assets/images/paldy.jpeg',
-                  width: 130,
-                  height: mediaQueryHeight * 0.23,
+                  width: 115,
+                  height: 150,
                   fit: BoxFit.fill,
                 ),
               ],

@@ -6,14 +6,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        ),
+      appBar: null,
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/Background.png"),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: const MyStatefulWidget(),
@@ -32,16 +30,17 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
-          children: <Widget>[
+          children: <Widget> [
             Container(
               alignment: Alignment.center,
-              child: Image.asset('assets/icons/logo.png', height: 140.0),
+              child: Image.asset('assets/icons/logo.png', height: 140),
             ),
             Container(
                 alignment: Alignment.center,
