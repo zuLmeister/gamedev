@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Login/login.dart';
+import 'package:flutter_auth/Screens/Signup/signup.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/pdw.dart';
 
@@ -38,6 +40,11 @@ class MyApp extends StatelessWidget {
             ),
           )),
       home: const WelcomeScreen(),
+      initialRoute: '/loginpage',
+      routes: {
+          '/loginpage': (context) => const LoginScreen(),
+          '/signup': (context) => const SignUpScreen(),
+        }
     );
   }
 }
