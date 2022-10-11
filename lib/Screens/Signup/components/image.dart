@@ -20,7 +20,7 @@ class SignUpScreenTopImage extends StatelessWidget {
             Expanded(
               flex: 8,
               child: Image.asset
-              ("assets/images/gta.png"),
+              ("assets/images/gta1sa.png"),
             ),
             const Spacer(),
           ],
