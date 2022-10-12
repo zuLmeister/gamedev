@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:gamedev/Screens/Fgdpswd/forgot_password.dart';
 import '../../../components/check.dart';
 import '../../../pdw.dart';
 import '../../Signup/signup.dart';

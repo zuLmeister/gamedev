@@ -4,19 +4,19 @@ import '../../components/background.dart';
 import 'components/form.dart';
 import 'components/screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class PassScreen extends StatelessWidget {
+  const PassScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Background(
       child: SingleChildScrollView(
         child: Responsive(
-          mobile: const MobileLoginScreen(),
+          mobile: const MobilePassScreen(),
           desktop: Row(
             children: [
               const Expanded(
-                child: LoginScreenTopImage(),
+                child: PassScreenTopImage(),
               ),
               Expanded(
                 child: Row(
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                   children: const [
                     SizedBox(
                       width: 450,
-                      child: LoginForm(),
+                      child: PassForm(),
                     ),
                   ],
                 ),
@@ -37,8 +37,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({
+class MobilePassScreen extends StatelessWidget {
+  const MobilePassScreen({
     Key? key,
   }) : super(key: key);
 
@@ -47,13 +47,13 @@ class MobileLoginScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const LoginScreenTopImage(),
+        const PassScreenTopImage(),
         Row(
           children: const [
             Spacer(),
             Expanded(
               flex: 8,
-              child: LoginForm(),
+              child: PassForm(),
             ),
             Spacer(),
           ],

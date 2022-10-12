@@ -9,6 +9,7 @@ import './pages/explore_page.dart';
 import './components/CommentBox.dart';
 import 'package:gamedev/pages/edit_profil.dart';
 import 'package:flutter/services.dart';
+import 'package:gamedev/Screens/Fgdpswd/forgot_password.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/loginpage': (context) => const LoginScreen(),
           '/signup': (context) => const SignUpScreen(),
+          '/pswd': (context) => const PassScreen(),
           '/welcome': (context) => const WelcomeScreen(),
           '/homepage': (context) => const HomePage(),
           '/detail-page': (context) => const DetailPage(),
