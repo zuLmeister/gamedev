@@ -13,7 +13,7 @@ class SignUpScreenTopImage extends StatelessWidget {
     return Column(
       children: [
         
-        SizedBox(height: defaultPadding),
+        const SizedBox(height: defaultPadding),
         Row(
           children: [
             const Spacer(),
@@ -25,7 +25,7 @@ class SignUpScreenTopImage extends StatelessWidget {
             const Spacer(),
           ],
         ),
-        SizedBox(height: defaultPadding),
+        const SizedBox(height: defaultPadding),
       ],
     );
   }

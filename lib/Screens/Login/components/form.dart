@@ -15,15 +15,19 @@ class LoginForm extends StatelessWidget {
       child: Column(
         children: [
           Text(
-          "Login".toUpperCase(),
-          style: TextStyle(height : 5, fontFamily: 'RobotoMono' , color : Color.fromARGB(255, 252, 252, 252),fontWeight: FontWeight.w900),
-        ),
+            "Login".toUpperCase(),
+            style: const TextStyle(
+                height: 5,
+                fontFamily: 'RobotoMono',
+                color: Color.fromARGB(255, 252, 252, 252),
+                fontWeight: FontWeight.w900),
+          ),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
@@ -37,7 +41,7 @@ class LoginForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
@@ -50,10 +54,11 @@ class LoginForm extends StatelessWidget {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/homepage');
+              },
               child: Text(
-                "Login".toUpperCase()
-                ,
+                "Login".toUpperCase(),
               ),
             ),
           ),
@@ -64,7 +69,7 @@ class LoginForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SignUpScreen();
+                    return const SignUpScreen();
                   },
                 ),
               );

@@ -79,8 +79,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pushNamed(context, '/detail-page');
                     },
                     child: Image.asset('assets/images/zulkipar.jpeg',
-                        fit: BoxFit.fill)
-                ),
+                        width: 115, height: 150, fit: BoxFit.fill)),
                 Image.asset(
                   'assets/images/zulkipar.jpeg',
                   width: 115,

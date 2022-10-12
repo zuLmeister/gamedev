@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/Navbar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -13,6 +14,42 @@ class _DetailPageState extends State<DetailPage> {
     'assets/images/slider1.jpg',
     'assets/images/background.jpg',
   ];
+  Widget commentChild(data) {
+    return ListView(
+      
+      children: [
+        for (var i = 0; i < data.length; i++)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
+            child: ListTile(
+              leading: GestureDetector(
+                onTap: () async {
+                  // Display the image in large form.
+                  print("Comment Clicked");
+                },
+                child: Container(
+                  height: 20.0,
+                  width: 20.0,
+                  decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: CircleAvatar(
+                      radius: 15,
+                      backgroundImage: NetworkImage(data[i]['pic'] + "$i")),
+                ),
+              ),
+              title: Text(
+                data[i]['name'],
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(data[i]['message']),
+            ),
+          )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQueryHeight = MediaQuery.of(context).size.height;
@@ -20,6 +57,9 @@ class _DetailPageState extends State<DetailPage> {
     final bool landScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     final bodyHeight = mediaQueryHeight - MediaQuery.of(context).padding.top;
+    final formKey = GlobalKey<FormState>();
+  final TextEditingController commentController = TextEditingController();
+  
     var stars = Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -32,7 +72,7 @@ class _DetailPageState extends State<DetailPage> {
     );
     return Scaffold(
       drawer: const Navbar(),
-      backgroundColor: Color.fromARGB(255, 35, 34, 34),
+      backgroundColor: Color.fromARGB(255, 2, 48, 71),
       appBar: AppBar(
         title: Image.asset('assets/icons/logo.png', height: 70.0),
         centerTitle: true,
@@ -43,14 +83,19 @@ class _DetailPageState extends State<DetailPage> {
           children: <Widget>[
             Container(
               alignment: Alignment.topLeft,
-              padding: const EdgeInsets.all(15),
-              child: const Text(
-                'Left 4 Dead',
-                style: TextStyle(
-                    fontSize: 40,
-                    // fontFamily: 'Inter',
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white),
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  const Text(
+                    'Left 4 Dead - ',
+                    style: TextStyle(
+                        fontSize: 20,
+                        // fontFamily: 'Inter',
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white),
+                  ),
+                  stars,
+                ],
               ),
             ),
             Container(
@@ -59,21 +104,87 @@ class _DetailPageState extends State<DetailPage> {
                 children: [
                   const Padding(padding: EdgeInsets.all(10)),
                   const Expanded(
-                      child: Text(
-                    "Flutter's hot reload helps you quickly and easily experiment, build UIs, add features, and fix bug faster. Experience sub-second reload times, without losing state, on emulators, simulators, and hardware for iOS and Android.",
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                      child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Text(
+                      "Flutter's hot reload helps you quickly and easily experiment, build UIs, add features, and fix bug faster.",
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      textAlign: TextAlign.justify,
+                    ),
                   )),
                   Image.asset(
                     'assets/images/zulkipar.jpeg',
-                    width: mediaQueryWidth * 0.2,
-                    height: mediaQueryHeight * 0.5,
+                    width: mediaQueryWidth * 0.30,
+                    height: mediaQueryHeight * 0.3,
                     fit: BoxFit.fill,
                   ),
                 ],
               ),
             ),
-            stars,
-            const Padding(padding: EdgeInsets.all(16.0)),
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: const Text(
+                'Explore More Games',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white),
+              ),
+            ),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: mediaQueryHeight * 0.5,
+                autoPlay: true,
+                viewportFraction: 1,
+                autoPlayInterval: const Duration(seconds: 4),
+              ),
+              items: [for (var gambar in imageURL) gambar].map((i) {
+                return Builder(builder: (BuildContext context) {
+                  return Container(
+                    width: mediaQueryWidth,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 35, 34, 34),
+                        border: Border.all(color: Colors.black54, width: 5.0)),
+                    child: Center(
+                      child: Image.asset(
+                        i,
+                        fit: BoxFit.fill,
+                        width: mediaQueryWidth,
+                        height: mediaQueryHeight,
+                      ),
+                    ),
+                  );
+                });
+              }).toList(),
+            ),
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: const Text(
+                'Comments',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/comment');
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(0, 40),
+                primary: Colors.amber,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12), // <-- Radius
+                ),
+              ),
+              child: const Text('Look into comment'),
+            ),
+            const Padding(padding: EdgeInsets.all(10))
           ],
         ),
       ),

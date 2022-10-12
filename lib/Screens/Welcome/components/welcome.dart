@@ -11,20 +11,20 @@ class WelcomeImage extends StatelessWidget {
     return Column(
       children: [
         
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
         Row(
           children: [
-            Spacer(),
+            const Spacer(),
             Expanded(
               flex: 8,
               child: Image.asset(
                 "assets/images/beat.png",
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
       ],
     );
   }

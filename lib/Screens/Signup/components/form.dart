@@ -16,14 +16,14 @@ class SignUpForm extends StatelessWidget {
         children: [
           Text(
           "Sign Up".toUpperCase(),
-          style: TextStyle(height : 5, fontFamily: 'RobotoMono' , color : Color.fromARGB(255, 252, 252, 252),fontWeight: FontWeight.w900),
+          style: const TextStyle(height : 5, fontFamily: 'RobotoMono' , color : Color.fromARGB(255, 252, 252, 252),fontWeight: FontWeight.w900),
         ),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
@@ -37,7 +37,7 @@ class SignUpForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.symmetric(vertical: defaultPadding),
@@ -52,7 +52,7 @@ class SignUpForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Confirm Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.symmetric(vertical :defaultPadding),
@@ -76,7 +76,7 @@ class SignUpForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );

@@ -6,13 +6,13 @@ class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.amber,
+      backgroundColor: Color.fromARGB(255, 2,48,71),
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text('Zulfikar Ahmad Komari'),
-            accountEmail: const Text('zulwasright@gmail.com'),
+            accountName: const Text('Zulfikar Ahmad Komari', style: TextStyle(color: Color.fromARGB(255, 2,48,71)),),
+            accountEmail: const Text('zulwasright@gmail.com', style: TextStyle(color: Color.fromARGB(255, 2,48,71))),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
@@ -23,26 +23,26 @@ class Navbar extends StatelessWidget {
               ),
             ),
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 63, 53, 53),
+              color: Colors.amber,
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.house_sharp),
-            title: const Text('Home Page'),
+            leading: const Icon(Icons.house_sharp,color: Colors.white),
+            title: const Text('Home Page',style: TextStyle(color: Colors.white)),
             onTap: () {
               Navigator.pushNamed(context, '/homepage');
             },
           ),
           ListTile(
-            leading: const Icon(Icons.account_circle),
-            title: const Text('Edit Profil'),
+            leading: const Icon(Icons.account_circle, color: Colors.white),
+            title: const Text('Edit Profil',style: TextStyle(color: Colors.white)),
             onTap: () {
-              Navigator.pushNamed(context, '/profil');
+              Navigator.pushNamed(context, '/editprofil');
             },
           ),
           ListTile(
-            leading: const Icon(Icons.exit_to_app_sharp),
-            title: const Text('Logout'),
+            leading: const Icon(Icons.exit_to_app_sharp, color: Colors.white,),
+            title: const Text('Logout',style: TextStyle(color: Colors.white)),
             onTap: () {
               Navigator.pushNamed(context, '/loginpage');
             },
