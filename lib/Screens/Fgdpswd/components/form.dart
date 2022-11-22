@@ -35,6 +35,18 @@ class PassForm extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: defaultPadding),
+          Hero(
+            tag: "login_btn",
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/loginpage');
+              },
+              child: Text(
+                "Kirim".toUpperCase(),
+              ),
+            ),
+          ),
       ],
     ));
   }}

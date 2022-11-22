@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar ({Key? key}) : super(key: key);
@@ -6,7 +7,7 @@ class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromARGB(255, 2,48,71),
+      backgroundColor: const Color.fromARGB(255, 2,48,71),
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -30,21 +31,21 @@ class Navbar extends StatelessWidget {
             leading: const Icon(Icons.house_sharp,color: Colors.white),
             title: const Text('Home Page',style: TextStyle(color: Colors.white)),
             onTap: () {
-              Navigator.pushNamed(context, '/homepage');
+              Get.toNamed('/homepage');
             },
           ),
           ListTile(
             leading: const Icon(Icons.account_circle, color: Colors.white),
             title: const Text('Edit Profil',style: TextStyle(color: Colors.white)),
             onTap: () {
-              Navigator.pushNamed(context, '/editprofil');
+              Get.toNamed('/editprofil');
             },
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app_sharp, color: Colors.white,),
             title: const Text('Logout',style: TextStyle(color: Colors.white)),
             onTap: () {
-              Navigator.pushNamed(context, '/loginpage');
+              Get.toNamed('/loginpage');
             },
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../components/Navbar.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -46,12 +47,12 @@ class _ExplorePageState extends State<ExplorePage> {
             Wrap(
               alignment: WrapAlignment.spaceAround,
               children: [
-                Image.asset(
-                  'assets/images/galih.jpeg',
-                  width: 130,
-                  height: mediaQueryHeight * 0.23,
-                  fit: BoxFit.fill,
-                ),
+                GestureDetector(
+                    onTap: () {
+                      Get.toNamed('/detail-page');
+                    },
+                    child: Image.asset('assets/images/zulkipar.jpeg',
+                        width: 115, height: 150, fit: BoxFit.fill)),
                 Image.asset(
                   'assets/images/zulkipar.jpeg',
                   width: 130,
@@ -77,7 +78,7 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/homepage');
+                Get.toNamed('/homepage');
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(0, 40),

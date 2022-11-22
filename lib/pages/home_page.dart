@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../components/Navbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -76,18 +77,18 @@ class _HomePageState extends State<HomePage> {
               children: [
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/detail-page');
+                      Get.toNamed('/detail-page');
                     },
                     child: Image.asset('assets/images/zulkipar.jpeg',
                         width: 115, height: 150, fit: BoxFit.fill)),
                 Image.asset(
-                  'assets/images/zulkipar.jpeg',
+                  'assets/images/paldy.jpeg',
                   width: 115,
                   height: 150,
                   fit: BoxFit.fill,
                 ),
                 Image.asset(
-                  'assets/images/paldy.jpeg',
+                  'assets/images/galih.jpeg',
                   width: 115,
                   height: 150,
                   fit: BoxFit.fill,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../components/Navbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -173,7 +174,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/comment');
+                Get.toNamed('/comment');
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(0, 40),

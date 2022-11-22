@@ -60,6 +60,7 @@ class _TestMeState extends State<TestMe> {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(data[i]['message']),
+              trailing: const Icon(Icons.chevron_right),
             ),
           )
       ],
