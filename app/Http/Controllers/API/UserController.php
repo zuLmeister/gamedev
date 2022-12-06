@@ -47,7 +47,6 @@ class UserController extends Controller
         return response()->json([
             'number' => 200,
             'success' => 'Berhasil',
-            'user'    => auth()->guard('api_guest')->user(),
             'token'   => $token
         ], 200);
     }
@@ -69,9 +68,10 @@ class UserController extends Controller
 
         $User = User::create([
             'email' => $request->email,
-            // 'username' => $request->username,
             'password' => Hash::make($request->password)
         ]);
+
+        
 
 
         if($User){
@@ -87,11 +87,25 @@ class UserController extends Controller
         //         $message->subject('Verifikasi Akun GameRev');
         //     });
 
-            return response()->json([
-                'number' => '200',
-                'status' => True,
-                'Pesan' => 'Silahkan check email mu'
-            ], 200);
+            $credentials = $request->only('email', 'password');
+
+            //check jika "email" dan "password" tidak sesuai
+            if(!$token = auth()->guard('api_guest')->attempt($credentials)) {
+
+                //response login "failed"
+                return response()->json([
+                    'number' => 401,
+                    'success' => false,
+                    'pesan' => 'Maaf, ID atau password salah'
+                ], 401);
+
+            } else {
+                return response()->json([
+                    'number' => 200,
+                    'success' => 'Berhasil',
+                    'token'   => $token
+                ], 200);
+            }
 
         } else {
             return response()->json([
@@ -103,15 +117,18 @@ class UserController extends Controller
         
     }
 
-    public function logout()
-    {
-        //remove "token" JWT
-        $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
+    public function logout(){
+        auth()->logout();
 
-        //response "success" logout
         return response()->json([
             'success' => true,
         ], 200);
+    }
 
+    public function me(){
+        return response()->json([
+            'success' => true,
+            'data' => auth()->guard('api_guest')->user(),
+        ], 200);
     }
 }

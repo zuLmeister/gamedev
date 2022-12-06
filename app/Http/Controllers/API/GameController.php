@@ -5,12 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Game;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
     public function index(){
-        $game = Game::with('kategori.kategori_game','slider')->when(request()->q, function($game) {
+        $game = Game::when(request()->q, function($game) {
             $game = $game->where('nama', 'like', '%'. request()->q . '%');
         })->latest()->paginate(5);
 
@@ -30,7 +31,7 @@ class GameController extends Controller
     }
 
     public function show($id){
-        $game = Game::with('kategori.kategori_game','slider')->FindOrFail($id)->first();
+        $game = Game::FindOrFail($id)->first();
 
         if($game){
             return response()->json([
@@ -50,13 +51,11 @@ class GameController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'nama'  => 'required',
-            'deskripsi' => 'required',
+            'nama'  => 'required|unique:game',
+            'deskripsi' => 'required|min:30',
             'cover' => 'required|image|mimes:jpeg,jpg,png|max:2000',
-            'video' => 'required',
             'rekomendasi' => 'required',
-            'kategori_id' => 'required',
-            'slider' => 'required|image|mimes:jpeg,jpg,png|max:2000'
+            'kategori' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -64,40 +63,18 @@ class GameController extends Controller
         }
 
         
-        $image = $request->file('cover');
-        $image->storeAs('public/game', $image->hashName());
-
-        $video = $request->file('video');
-        $video->storeAs('public/game', $video->hashName());
+        $cover = $request->file('cover');
+        $new_cover = time() . $cover->getClientOriginalName();
+        $cover->move('game/', $new_cover);
 
         $game = Game::create([
             'nama' => $request->nama,
-            'deskirpsi' => $request->deskripsi,
-            'cover' => $image->hashName(),
-            'video' => $videp->hasName(),
+            'deskripsi' => $request->deskripsi,
+            'kategori' => $request->kategori,
+            'cover' => public_path().'/game/'. $new_cover,
             'rekomendasi' => $request->rekomendasi,
-            'slug' => Str::slug('nama'),
+            'slug' => Str::slug($request->nama),
         ]);
-
-        if($request->kategori_id){
-            foreach($request->kategori_id as $kategori){
-                KategoriGame::create([
-                    'game_id' => $game->id,
-                    'kategori_id' => $request->kategori_id
-                ]);
-            }
-        }
-
-        if($request->has('gambar')){
-            foreach($request->file('gambar') as $gambar){
-                $gambar = $request->file('gambar');
-                $gambar->storeAs('public/game/slider', $gambar->hashName());
-                Slider::create([
-                    'id_paket' => $paket->id,
-                    'gambar' => $slider->hashName(), 
-                ]);
-            }
-        }
 
         if($game){
             return response()->json([
@@ -117,8 +94,8 @@ class GameController extends Controller
 
     public function update(Request $request, $id){
         $validator = Validator::make($request->all(), [
-            'nama'  => 'required',
-            'deskripsi' => 'required',
+            'nama'  => 'unique:game',
+            'deskripsi' => 'min:30',
         ]);
 
         if ($validator->fails()) {
@@ -126,155 +103,61 @@ class GameController extends Controller
         }
 
         $game = Game::FindOrFail($id);
-        
-        if($request->file('video')){
-            if($request->file('cover')){
-                Storage::disk('local')->delete('public/game/'.basename($game->cover));
-                Storage::disk('local')->delete('public/game/'.basename($game->video));
 
-                $image = $request->file('cover');
-                $image->storeAs('public/game', $image->hashName());
+        if ($request->hasFile('cover')) {
 
-                $video = $request->file('video');
-                $video->storeAs('public/game', $video->hashName());
-
-                $game = Game::update([
-                    'nama' => $request->nama,
-                    'deskirpsi' => $request->deskripsi,
-                    'cover' => $image->hashName(),
-                    'video' => $videp->hasName(),
-                    'rekomendasi' => $request->rekomendasi,
-                    'slug' => Str::slug('nama'),
-                ]);
-            } else {
-                Storage::disk('local')->delete('public/game/'.basename($game->video));
-
-                $video = $request->file('video');
-                $video->storeAs('public/game', $video->hashName());
-
-                $game = Game::update([
-                    'nama' => $request->nama,
-                    'deskirpsi' => $request->deskripsi,
-                    'video' => $videp->hasName(),
-                    'rekomendasi' => $request->rekomendasi,
-                    'slug' => Str::slug('nama'),
-                ]);
+            //remove old image
+            if ($game->cover){
+                unlink($game->cover);
             }
 
-            if($request->kategori_id){
-                $slider = KategoriGame::where('game_id',$game->$id)->get();
-                foreach($slider as $sliders => $data){
-                    $data->delete();
-                }
+            //upload new image
+            $cover = $request->file('cover');
+            $new_cover = time() . $cover->getClientOriginalName();
+            $cover->move('cover/', $new_cover);
 
-                foreach($request->kategori_id as $kategori){
-                    $request->method('POST');
-                    KategoriGame::create([
-                        'game_id' => $game->id,
-                        'kategori_id' => $request->kategori_id
-                    ]);
-                }
-            }
-    
-            if($request->has('gambar')){
-                $slider = Slider::where('game_id',$game->$id)->get();
-                foreach($slider as $sliders => $data){
-                    unlink(public_path($data->gambar));
-                    $data->delete();
-                }
-
-                foreach($request->file('gambar') as $gambar){
-                    $request->method('POST');
-                    $gambar = $request->file('gambar');
-                    $gambar->storeAs('public/game/slider', $gambar->hashName());
-                    Slider::create([
-                        'game_id' => $paket->id,
-                        'gambar' => $gambar->hashName(), 
-                    ]);
-                }
-            }
+            $game->update([
+                'nama' => $request->nama,
+                'deskirpsi' => $request->deskripsi,
+                'kategori' => $request->kategori,
+                'cover' => public_path().'/game/'.$new_cover,
+                'rekomendasi' => $request->rekomendasi,
+                'slug' => Str::slug($request->nama),
+            ]);
 
             if($game){
                 return response()->json([
                     'number' => 200,
-                    'status' => true,
-                    'pesan' => 'Game berhasil diubah'
+                    'success' => True,
+                    'pesan' => 'Edit game berhasil'
                 ]);
             } else {
                 return response()->json([
                     'number' => 401,
-                    'status' => false,
-                    'pesan' => 'Game gagal diubah',
+                    'success' => false,
+                    'pesan' => 'Edit game gagal'
                 ]);
             }
-
         } else {
-            if($request->file('cover')){
-                Storage::disk('local')->delete('public/game/'.basename($game->cover));
-
-                $image = $request->file('cover');
-                $image->storeAs('public/game', $image->hashName());
-
-                $game = Game::update([
-                    'nama' => $request->nama,
-                    'deskirpsi' => $request->deskripsi,
-                    'cover' => $image->hashName(),
-                    'rekomendasi' => $request->rekomendasi,
-                    'slug' => Str::slug('nama'),
-                ]);
-            } else {
-                $game = Game::update([
-                    'nama' => $request->nama,
-                    'deskirpsi' => $request->deskripsi,
-                    'rekomendasi' => $request->rekomendasi,
-                    'slug' => Str::slug('nama'),
-                ]);
-            }
-
-            if($request->kategori_id){
-                $slider = KategoriGame::where('game_id',$game->$id)->get();
-                foreach($slider as $sliders => $data){
-                    $data->delete();
-                }
-
-                foreach($request->kategori_id as $kategori){
-                    $request->method('POST');
-                    KategoriGame::create([
-                        'game_id' => $game->id,
-                        'kategori_id' => $request->kategori_id
-                    ]);
-                }
-            }
-    
-            if($request->has('gambar')){
-                $slider = Slider::where('game_id',$game->$id)->get();
-                foreach($slider as $sliders => $data){
-                    unlink(public_path($data->gambar));
-                    $data->delete();
-                }
-
-                foreach($request->file('gambar') as $gambar){
-                    $request->method('POST');
-                    $gambar = $request->file('gambar');
-                    $gambar->storeAs('public/game/slider', $gambar->hashName());
-                    Slider::create([
-                        'game_id' => $paket->id,
-                        'gambar' => $gambar->hashName(), 
-                    ]);
-                }
-            }
+            $game->update([
+                'nama' => $request->nama,
+                'deskirpsi' => $request->deskripsi,
+                'kategori' => $request->kategori,
+                'rekomendasi' => $request->rekomendasi,
+                'slug' => Str::slug($request->nama),
+            ]);
 
             if($game){
                 return response()->json([
                     'number' => 200,
-                    'status' => true,
-                    'pesan' => 'Game berhasil diubah'
+                    'success' => True,
+                    'pesan' => 'Edit game berhasil'
                 ]);
             } else {
                 return response()->json([
                     'number' => 401,
-                    'status' => false,
-                    'pesan' => 'Game gagal diubah',
+                    'success' => false,
+                    'pesan' => 'Edit game gagal'
                 ]);
             }
         }
@@ -284,8 +167,7 @@ class GameController extends Controller
         $game = Game::FindOrFail($id);
         
         if($game->delete()){
-            Storage::disk('local')->delete('public/game/'.basename($game->cover));
-            Storage::disk('local')->delete('public/game/'.basename($game->cover));
+            unlink(public_path($game->cover));
             return response()->json([
                 'number' => 200,
                 'status' => true,

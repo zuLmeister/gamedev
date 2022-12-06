@@ -10,7 +10,7 @@ class ReviewController extends Controller
 {
 
     public function show($game){
-        $game = Kategori::where('game_id',$game)->get();
+        $game = Review::where('game_id',$game)->get();
 
         if($game){
             return response()->json([
